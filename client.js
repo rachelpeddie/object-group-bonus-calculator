@@ -41,3 +41,35 @@ const employees = [
 // Ask questions when you don't.
 
 console.log( employees );
+
+/* The`name` property should contain the employee's name.
+* The`bonusPercentage` property should contain the bonus percentage the employee is to receive.See section below for calculation instructions.
+* The`totalCompensation` property should be the adjusted annual compensation(base annual + bonus)
+* The`totalBonus` should be the employee's total bonus rounded to the nearest dollar. */
+
+
+// function to create new objects with bonus info
+  function getBonusInfo( someEmployee ){
+    let bonusPercentage = getBonusPercentage( someEmployee );
+    let employeeAnnual = someEmployee.annualSalary
+    let totalBonus = bonusPercentage/100 * employeeAnnual;
+    let totalCompensation = employeeAnnual + totalBonus;
+    let resultObject = {
+      name: someEmployee.name,
+      bonusPercentage: bonusPercentage,
+      totalCompensation: totalCompensation,
+      totalBonus: totalBonus,
+    }
+    return resultObject;
+  } // end getBonusInfo
+
+  // function to get bonus percentage
+  function getBonusPercentage( someEmployee ){
+    let percentage = 0;
+    return percentage;
+  } // end 
+
+  for( let i=0; i<employees.length; i++ ){
+    let bonusInfo = getBonusInfo;
+    console.log( `Bonus info for ${employees[i].name}: `, bonusInfo);
+  }
