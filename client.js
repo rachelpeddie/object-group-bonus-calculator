@@ -51,14 +51,14 @@ console.log( employees );
 // function to create new objects with bonus info
   function getBonusInfo( someEmployee ){
     let bonusPercentage = getBonusPercentage( someEmployee );
-    let employeeAnnual = someEmployee.annualSalary
-    let totalBonus = bonusPercentage/100 * employeeAnnual;
+    let employeeAnnual = Number( someEmployee.annualSalary );
+    let totalBonus = Math.round( bonusPercentage/100 * employeeAnnual );
     let totalCompensation = employeeAnnual + totalBonus;
     let resultObject = {
       name: someEmployee.name,
       bonusPercentage: bonusPercentage,
       totalCompensation: totalCompensation,
-      totalBonus: totalBonus,
+      totalBonus: totalBonus
     }
     return resultObject;
   } // end getBonusInfo
@@ -66,10 +66,45 @@ console.log( employees );
   // function to get bonus percentage
   function getBonusPercentage( someEmployee ){
     let percentage = 0;
+    let rating = someEmployee.reviewRating;
+
+// Those who have a rating of a 2 or below should not receive a bonus.
+    if( rating <= 2 ){
+      return percentage;
+    }
+// Those who have a rating of a 3 should receive a base bonus of 4 % of their base annual income.
+    if( rating === 3 ){
+      percentage = 4;
+    }
+// Those who have a rating of a 4 should receive a base bonus of 6 % of their base annual income.
+    else if( rating === 4 ){
+      percentage = 6;
+    }
+// Those who have a rating of a 5 should receive a base bonus of 10 % of their base annual income.
+    else if( rating === 5 ){
+      percentage = 10;
+    }
+//  If their employee number is 4 digits long, this means they have been with the company for longer than 15 years, and should receive an additional 5 %.
+    if( someEmployee.employeeNumber.length === 4 ){
+      percentage += 5;
+    }
+// However, if their annual income is greater than $65, 000, they should have their bonus adjusted down 1 %.
+    if( Number( someEmployee.annualSalary ) > 65000){
+      percentage -= 1;
+    }
+// No bonus can be above 13 % or below 0 % total.
+    if( percentage > 13 ){
+      percentage = 13;
+    }
+    else if( percentage < 0 ){
+      percentage = 0;
+    }
+
     return percentage;
   } // end 
 
+  // for loop to list each employees info
   for( let i=0; i<employees.length; i++ ){
     let bonusInfo = getBonusInfo;
     console.log( `Bonus info for ${employees[i].name}: `, bonusInfo);
-  }
+  } // end for loop
